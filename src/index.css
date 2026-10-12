@@ -1,1 +1,86 @@
 @import "tailwindcss";
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #f3f4f6;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+/* --- KHU VỰC HIỆU ỨNG 3D --- */
+.arena-perspective {
+  perspective: 1200px;
+  perspective-origin: 50% 20%;
+  transform-style: preserve-3d;
+}
+
+.track-3d {
+  transform: rotateX(45deg) translateZ(-50px) scale(0.9);
+  box-shadow: 0 50px 100px -10px rgba(0, 0, 0, 0.8);
+  border-radius: 24px;
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.8s;
+}
+
+.track-2d {
+  transform: rotateX(0deg) translateZ(0) scale(1);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.8s;
+}
+
+/* Đứng ngựa và bảng tên lên khi mặt đường nghiêng (chỉ ở chế độ 3D) */
+.horse-3d {
+  transform: rotateX(-45deg) translateY(-25px);
+  transform-origin: bottom center;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.horse-2d {
+  transform: rotateX(0deg) translateY(0);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- ANIMATION PHI NGỰA & BỤI --- */
+@keyframes gallop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.05) rotate(6deg);
+  }
+}
+
+.animate-gallop {
+  animation: gallop 0.35s infinite ease-in-out;
+}
+
+@keyframes dust {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.5) translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.5) translate(-30px, -10px);
+  }
+}
+
+.dust-particle {
+  animation: dust 0.4s infinite linear;
+}

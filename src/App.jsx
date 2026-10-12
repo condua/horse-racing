@@ -10,9 +10,10 @@ export default function App() {
     duration: 30,
     anonymousMode: false,
     soundEnabled: true,
+    trackTheme: 'grass', // 'grass' | 'dirt' | 'cyberpunk'
+    view3D: true,        // Chế độ 3D mặc định
   });
 
-  // Trạng thái: 'setup' | 'racing'
   const [appState, setAppState] = useState('setup');
 
   const startRace = () => {
@@ -23,42 +24,24 @@ export default function App() {
     setAppState('racing');
   };
 
-  const backToSetup = () => {
-    setAppState('setup');
-  };
-
   return (
     <div className="min-h-screen flex flex-col font-sans bg-slate-50">
-      <header className="bg-indigo-700 text-white p-4 shadow-md flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <Trophy className="w-8 h-8 text-yellow-400" />
-          <h1 className="text-2xl font-bold tracking-tight">MLPA Horse Racing</h1>
+      <header className="bg-indigo-900 text-white p-4 shadow-xl flex justify-between items-center z-50">
+        <div className="flex items-center gap-3">
+          <Trophy className="w-8 h-8 text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.8)]" />
+          <h1 className="text-2xl font-black tracking-tight uppercase">MLPA 3D Racing</h1>
         </div>
         {appState === 'racing' && (
-          <button
-            onClick={backToSetup}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-800 rounded text-sm font-semibold transition-colors"
-          >
+          <button onClick={() => setAppState('setup')} className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold shadow-lg transition-colors">
             Quay lại Setup
           </button>
         )}
       </header>
-
       <main className="flex-grow flex flex-col relative">
         {appState === 'setup' ? (
-          <GameSetup
-            students={students}
-            setStudents={setStudents}
-            config={config}
-            setConfig={setConfig}
-            onStart={startRace}
-          />
+          <GameSetup students={students} setStudents={setStudents} config={config} setConfig={setConfig} onStart={startRace} />
         ) : (
-          <RaceArena
-            students={students}
-            config={config}
-            onBack={backToSetup}
-          />
+          <RaceArena students={students} config={config} setConfig={setConfig} onBack={() => setAppState('setup')} />
         )}
       </main>
     </div>
