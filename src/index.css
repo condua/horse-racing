@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #f3f4f6;
+  background-color: #0f172a;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -11,76 +11,179 @@ body {
   height: 8px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
 }
 
-/* --- KHU VỰC HIỆU ỨNG 3D --- */
+/* GÓC CAMERA 3D */
 .arena-perspective {
-  perspective: 1200px;
-  perspective-origin: 50% 20%;
+  perspective: 1400px;
+  perspective-origin: 50% 10%;
   transform-style: preserve-3d;
 }
 
 .track-3d {
-  transform: rotateX(45deg) translateZ(-50px) scale(0.9);
-  box-shadow: 0 50px 100px -10px rgba(0, 0, 0, 0.8);
-  border-radius: 24px;
+  transform: rotateX(55deg) translateZ(-150px) scale(0.85);
   transition:
     transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.8s;
+    box-shadow 0.8s,
+    border 0.8s;
+  border-radius: 24px;
 }
 
 .track-2d {
   transform: rotateX(0deg) translateZ(0) scale(1);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
   transition:
     transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.8s;
+    box-shadow 0.8s,
+    border 0.8s;
+  border-radius: 12px;
 }
 
-/* Đứng ngựa và bảng tên lên khi mặt đường nghiêng (chỉ ở chế độ 3D) */
+/* ĐỘ DÀY ĐƯỜNG ĐUA CHO CÁC MÔI TRƯỜNG */
+.track-depth-grass {
+  box-shadow:
+    0 25px 0 #14532d,
+    0 45px 80px -10px rgba(0, 0, 0, 0.9);
+}
+.track-depth-dirt {
+  box-shadow:
+    0 25px 0 #451a03,
+    0 45px 80px -10px rgba(0, 0, 0, 0.9);
+}
+.track-depth-cyberpunk {
+  box-shadow:
+    0 25px 0 #020617,
+    0 0 50px rgba(6, 182, 212, 0.4),
+    0 50px 80px -10px rgba(0, 0, 0, 1);
+}
+.track-depth-galaxy {
+  box-shadow:
+    0 25px 0 #1e1b4b,
+    0 0 50px rgba(168, 85, 247, 0.5),
+    0 50px 80px -10px rgba(0, 0, 0, 1);
+}
+.track-depth-ocean {
+  box-shadow:
+    0 25px 0 #083344,
+    0 0 50px rgba(34, 211, 238, 0.4),
+    0 50px 80px -10px rgba(0, 0, 0, 1);
+}
+.track-depth-lava {
+  box-shadow:
+    0 25px 0 #450a0a,
+    0 0 60px rgba(239, 68, 68, 0.6),
+    0 50px 80px -10px rgba(0, 0, 0, 1);
+}
+
+/* ANIMATION NGỰA REALISTIC */
 .horse-3d {
-  transform: rotateX(-45deg) translateY(-25px);
+  transform: rotateX(-55deg) translateY(-20px);
   transform-origin: bottom center;
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .horse-2d {
   transform: rotateX(0deg) translateY(0);
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- ANIMATION PHI NGỰA & BỤI --- */
-@keyframes gallop {
-  0%,
-  100% {
-    transform: translateY(0) scale(1) rotate(-2deg);
+@keyframes gallop-realistic {
+  0% {
+    transform: translateY(0) rotate(-4deg) scaleY(1);
+  }
+  25% {
+    transform: translateY(-12px) rotate(6deg) scaleY(1.05);
   }
   50% {
-    transform: translateY(-15px) scale(1.05) rotate(6deg);
+    transform: translateY(-28px) rotate(12deg) scaleY(0.95);
   }
-}
-
-.animate-gallop {
-  animation: gallop 0.35s infinite ease-in-out;
-}
-
-@keyframes dust {
-  0% {
-    opacity: 0.8;
-    transform: scale(0.5) translate(0, 0);
+  75% {
+    transform: translateY(-12px) rotate(3deg) scaleY(1.02);
   }
   100% {
-    opacity: 0;
-    transform: scale(2.5) translate(-30px, -10px);
+    transform: translateY(0) rotate(-4deg) scaleY(1);
   }
 }
 
-.dust-particle {
-  animation: dust 0.4s infinite linear;
+.animate-gallop-realistic {
+  animation: gallop-realistic 0.4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* HIỆU ỨNG VẾT CHẠY & BỤI */
+@keyframes speed-lines {
+  0% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(-180px) scaleX(5);
+    opacity: 0;
+  }
+}
+.dust-trail {
+  animation: speed-lines 0.25s infinite linear;
+}
+
+@keyframes magic-sparkles {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-30px) scale(0);
+    opacity: 0;
+  }
+}
+.magic-sparkle {
+  animation: magic-sparkles 0.6s infinite ease-out;
+}
+
+/* CÁC BACKGROUND ĐẸP */
+.bg-grid-cyberpunk {
+  background-image:
+    linear-gradient(rgba(6, 182, 212, 0.3) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.3) 2px, transparent 2px);
+  background-size: 80px 80px;
+  background-position: center;
+  animation: grid-move 3s linear infinite;
+}
+@keyframes grid-move {
+  0% {
+    transform: translateY(0) rotateX(60deg);
+  }
+  100% {
+    transform: translateY(80px) rotateX(60deg);
+  }
+}
+
+.bg-stars {
+  background-image:
+    radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 4px),
+    radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 3px);
+  background-size:
+    550px 550px,
+    350px 350px;
+  background-position:
+    0 0,
+    40px 60px;
+}
+
+.bg-waves {
+  background: repeating-radial-gradient(
+    circle at 50% 150%,
+    rgba(255, 255, 255, 0.05) 0,
+    rgba(255, 255, 255, 0.05) 20px,
+    transparent 20px,
+    transparent 40px
+  );
+}
+
+.bg-lava-particles {
+  background-image: radial-gradient(#fb923c 2px, transparent 2px);
+  background-size: 150px 150px;
 }
