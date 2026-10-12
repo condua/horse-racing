@@ -67,7 +67,7 @@ export const HorseIcon = ({ color, className = "w-[85px] h-[85px]", isRacing = f
                 </div>
             )}
 
-            {/* 
+            {/* ---
               Khung chứa Pixel Art 
               - shapeRendering="crispEdges": Đảm bảo các cạnh viền luôn sắc nét rập khuôn 8-bit, không bị mờ (anti-aliasing)
             */}
